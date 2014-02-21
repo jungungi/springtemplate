@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.skt.wifi.mgr.login.persistence.AdminMapper">
+	<select id="selectAdminList"  parameterType="Admin" resultType="Admin">
+		SELECT ADMIN_ID,
+			PASSWORD,
+			ADMIN_NM,
+			USE_YN,
+			ADMIN_GROUP
+		FROM ADMIN 
+		WHERE 1=1
+	</select>
+	
+	<select id="selectAdmin" parameterType="Admin" resultType="Admin">
+	  	SELECT
+			ADMIN_ID,
+		    PASSWORD,
+		    ADMIN_NM,
+		    ADMIN_GROUP,
+		    USE_YN,
+		    CRE_DTD,
+		    CRE_ID,
+		    UPD_DTD,
+		    UPD_ID
+		FROM ADMIN 
+		WHERE 1 = 1
+		  AND ADMIN_ID = #{admin_id}		
+	</select>
+	
+	<insert id="insertAdmin" parameterType="Admin">
+			INSERT
+			INTO ADMIN
+			  (
+			    ADMIN_ID,
+			    PASSWORD,
+			    ADMIN_NM,
+			    ADMIN_GROUP,
+			    USE_YN,
+			    CRE_DTD,
+			    CRE_ID,
+			    UPD_DTD,
+			    UPD_ID			   
+			  )
+			  VALUES
+			  (
+			    #{admin_id},		
+			    #{password},
+			    #{admin_nm},
+			    #{admin_group},
+			    #{use_yn},
+			    #{cre_dtd},
+			    #{cre_id},
+			    #{upd_dtd},
+			    #{upd_id}			    
+			  )
+	</insert>
+	
+	<update id="updateAdmin" parameterType="Admin">
+		UPDATE ADMIN
+		SET 
+			<if test="password != null" >
+				PASSWORD = #{password},
+			</if>
+			<if test="admin_nm != null" >						
+				ADMIN_NM = #{admin_nm},
+			</if>
+			<if test="admin_group != null" >
+				ADMIN_GROUP = #{admin_group},
+			</if>
+			<if test="use_yn != null" >
+				USE_YN = #{use_yn},
+			</if>
+			UPD_DTD =	#{upd_dtd},
+			UPD_ID =	#{upd_id}
+		WHERE ADMIN_ID  = #{admin_id}		
+	</update>
+	
+	<delete id="deleteAdmin"  parameterType="Admin">
+		DELETE
+		FROM ADMIN
+		WHERE ADMIN_ID  = #{admin_id}	
+	</delete>
+	
+</mapper>
